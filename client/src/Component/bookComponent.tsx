@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
-import { fetchBooks,addBook } from '../Service/book';
+import { fetchBooks, addBook } from '../Service/book';
+import { login } from '../Service/http';
 
 export interface Book {
   id: number;
@@ -28,14 +29,24 @@ export function BookComponent() {
     } catch (err) {
       console.error('Error adding book:', err);
     }
+
   };
+
+ const handleLogin = async () => {
+  try {
+    const token = await login('shira', '1234');
+    console.log('נשמר בלוקל סטורג:', token);
+  } catch (err) {
+    console.error('Login failed:', err);
+  }
+};
 
   return (
     <div>
       <h1>Books</h1>
       <button onClick={loadBooks}>Load Books</button>
 
-      <button onClick={addNewBook}>Add Book</button>
+      <button onClick={handleLogin}>LOGIN</button>
       <ul>
         {books.map(b => (
           <li key={b.id}>{b.title} – {b.author}</li>
