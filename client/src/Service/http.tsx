@@ -1,15 +1,26 @@
 import axios from "axios";
 
-export const httpGet=(url:string)=>{
-return axios.get(url,{withCredentials:true})
-.then(response=>response.data)
-.catch(error=>error.response.data);
 
+
+
+
+const api = axios.create({
+  baseURL: "http://localhost:3000", 
+  timeout: 5000,                    
+  withCredentials: true,           
+  // headers: {
+  //   "Content-Type": "application/json",
+  //   Authorization: "Bearer myToken"
+  // },
+});
+
+export const httpGet=(url:string)=>{
+return api.get(url)
+.then(response=>response.data)
 }
 
 export const httpPost = (url: string, data: any) => {
-  return axios
-    .post(url, data, { withCredentials: true })
+  return api
+    .post(url, data,)
     .then(response => response.data)
-    .catch(error => error.response?.data);
 };

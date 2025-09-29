@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { fetchBooks, addBook } from '../Service/book';
+import { fetchBooks,addBook } from '../Service/book';
 
 export interface Book {
   id: number;
@@ -11,9 +11,15 @@ export interface Book {
 export function BookComponent() {
   const [books, setBooks] = useState<Book[]>([]);
 
-  useEffect(() => {
-    fetchBooks().then(setBooks).catch(console.error);
-  }, []);
+  const loadBooks = async () => {
+    try {
+      const data = await fetchBooks();
+      setBooks(data);
+      console.log(data)
+    } catch (err) {
+      console.error('Error fetching books:', err);
+    }
+  }
 
   const addNewBook = async () => {
     try {
@@ -27,6 +33,8 @@ export function BookComponent() {
   return (
     <div>
       <h1>Books</h1>
+      <button onClick={loadBooks}>Load Books</button>
+
       <button onClick={addNewBook}>Add Book</button>
       <ul>
         {books.map(b => (
