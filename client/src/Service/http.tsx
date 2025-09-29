@@ -30,3 +30,12 @@ const { data } = await api.post('/user/login', { username, password });
   localStorage.setItem('token', data.token);
   return data.token;
 }
+
+export async function logout() {
+  const token = localStorage.getItem("token");
+  if (!token) return;
+
+  await api.post("/user/logout", {}, { headers: { Authorization: token } });
+  localStorage.removeItem("token");
+  console.log("Logged out, token removed from localStorage");
+}

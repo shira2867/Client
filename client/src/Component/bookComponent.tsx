@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { fetchBooks, addBook } from '../Service/book';
-import { login } from '../Service/http';
+import { login,logout } from '../Service/http';
 
 export interface Book {
   id: number;
@@ -32,19 +32,21 @@ export function BookComponent() {
 
   };
 
- const handleLogin = async () => {
-  try {
-    const token = await login('shira', '1234');
-    console.log('נשמר בלוקל סטורג:', token);
-  } catch (err) {
-    console.error('Login failed:', err);
-  }
-};
+  const handleLogin = async () => {
+    try {
+      const token = await login('shira', '1234');
+      console.log('נשמר בלוקל סטורג:', token);
+    } catch (err) {
+      console.error('Login failed:', err);
+    }
+  };
+
 
   return (
     <div>
       <h1>Books</h1>
       <button onClick={loadBooks}>Load Books</button>
+      <button onClick={logout}>LOGOUT</button>
 
       <button onClick={handleLogin}>LOGIN</button>
       <ul>
